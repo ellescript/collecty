@@ -1,6 +1,6 @@
 {
   "name": "@ellescript/collecty",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "allows iterating an array of elements with an easy-to-read syntax and gives functionality to the collection and the elements it iterates.",
   "main": "./dist/umd/index.umd.cjs",
   "types": "./dist/types/index.d.ts",

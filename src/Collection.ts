@@ -497,9 +497,7 @@ export default class Collection extends Iterable {
     }
 
     public whereIn(property: string, values: any[] | Collection) {
-        const arrayValues = values instanceof Array
-            ? values
-            : values.toArray?.() ?? Array.from(values as any);
+        const arrayValues = values instanceof Array ? values : values.toArray?.() ?? Array.from(values as any);
 
         const normalize = (v: any) => String(v).toLowerCase();
 
@@ -511,10 +509,7 @@ export default class Collection extends Iterable {
             const entityValue = normalize(getProperty(entity, property));
 
             return arrayValues.some((value) => {
-                const compareValue =
-                    value && typeof value === 'object'
-                        ? getProperty(value, property) ?? value
-                        : value;
+                const compareValue = value && typeof value === 'object' ? getProperty(value, property) ?? value : value;
 
                 return normalize(compareValue) === entityValue;
             });
