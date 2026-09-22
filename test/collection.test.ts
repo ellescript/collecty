@@ -95,10 +95,19 @@ test('test "whereIn" method', () => {
 
     let articles = new Collection([{
         title: 'First article',
+        country: {
+            city: 'Berlin'
+        }
     }, {
         title: 'Second article',
+        country: {
+            city: 'Berlin'
+        }
     }, {
         title: 'Third article',
+        country: {
+            city: 'London'
+        }
     }])
 
     let otherArticles = new Collection(['First article', 'Second article'])
@@ -106,6 +115,9 @@ test('test "whereIn" method', () => {
     const filteredArticles = articles.whereIn('title', otherArticles)
 
     expect(filteredArticles.count()).toBe(2)
+    expect(articles.whereIn('country.city', ['Berlin', 'London']).count()).toBe(3)
+    expect(articles.whereIn('country.city', ['Berlin']).count()).toBe(2)
+    expect(articles.whereIn('country.city', ['Other']).count()).toBe(0)
 
     let numbers = new Collection([{
         item: 1

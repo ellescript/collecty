@@ -497,15 +497,24 @@ export default class Collection extends Iterable {
     }
 
     public whereIn(property: string, values: any[] | Collection) {
-        const arrayValues = values instanceof Array ? values : values.toArray?.() ?? Array.from(values as any);
+        const arrayValues = values instanceof Array
+            ? values
+            : values.toArray?.() ?? Array.from(values as any);
 
         const normalize = (v: any) => String(v).toLowerCase();
 
+        const getProperty = (entity: any, property: string) => {
+            return property.split('.').reduce((value, key) => value?.[key], entity);
+        };
+
         return this.filter((entity) => {
-            const entityValue = normalize(entity[property]);
+            const entityValue = normalize(getProperty(entity, property));
 
             return arrayValues.some((value) => {
-                const compareValue = value && typeof value === 'object' ? value[property] ?? value : value;
+                const compareValue =
+                    value && typeof value === 'object'
+                        ? getProperty(value, property) ?? value
+                        : value;
 
                 return normalize(compareValue) === entityValue;
             });
